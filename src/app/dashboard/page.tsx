@@ -94,7 +94,7 @@ export default function DashboardPage() {
   const [usage, setUsage] = useState<Record<string, UsageAgent>>({});
   const [usageResets, setUsageResets] = useState("");
   const [kodoData, setKodoData] = useState<{
-    activeTask: string;
+    activeTask: string | { name: string; status: string; progress_percent?: number; blockedOn?: string | null };
     recentOutputs: { file: string; lines: number; summary: string }[];
     cronJobs: { name: string; schedule: string; status: string }[];
   } | null>(null);
@@ -402,7 +402,9 @@ export default function DashboardPage() {
               </p>
               {kodoData?.activeTask ? (
                 <p className="font-mono text-xs text-foreground/80">
-                  {kodoData.activeTask}
+                  {typeof kodoData.activeTask === "string"
+                    ? kodoData.activeTask
+                    : kodoData.activeTask.name}
                 </p>
               ) : taskQueue.active.length > 0 ? (
                 <div className="space-y-1">
