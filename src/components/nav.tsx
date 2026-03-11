@@ -7,7 +7,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
   { href: "/studio", label: "Studio" },
-  { href: "/brain-dumps", label: "Brain Dumps" },
+  { href: "/brain-dumps", label: "Dumps" },
 ];
 
 export function Nav() {
@@ -18,7 +18,7 @@ export function Nav() {
       <div className="mx-auto max-w-5xl px-6 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="font-mono text-sm tracking-widest text-foreground hover:text-accent transition-colors uppercase"
+          className="font-mono text-sm tracking-widest text-foreground glitch-text uppercase"
         >
           WJP
         </Link>
@@ -27,7 +27,7 @@ export function Nav() {
             <Link
               key={href}
               href={href}
-              className={`font-mono text-xs tracking-wide uppercase transition-colors ${
+              className={`font-mono text-xs tracking-wide uppercase transition-colors glitch-text ${
                 pathname === href
                   ? "text-foreground"
                   : "text-muted hover:text-foreground"

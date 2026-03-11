@@ -24,13 +24,145 @@ body {
   color: #f5f5f5;
 }
 
-/* Pixel art rendering for decorative elements */
+/* ── Pixel Art Rendering ─────────────────────────── */
 .pixel-render {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
 
-/* 8px grid snap utility */
+/* ── CRT Scanline Overlay ────────────────────────── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* ── Glitch Hover Effect ─────────────────────────── */
+.glitch-hover {
+  position: relative;
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s ease-in-out;
+}
+
+@keyframes glitch {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  10% {
+    clip-path: inset(40% 0 20% 0);
+    transform: translate(-2px, 0);
+  }
+  20% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(2px, 0);
+  }
+  30% {
+    clip-path: inset(80% 0 0% 0);
+    transform: translate(-1px, 0);
+  }
+  40% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+}
+
+/* RGB channel offset on hover — layered via text-shadow */
+.glitch-text:hover {
+  text-shadow:
+    -1px 0 rgba(255, 107, 0, 0.7),
+    1px 0 rgba(0, 255, 255, 0.4);
+  animation: glitch-text 0.2s ease-in-out;
+}
+
+@keyframes glitch-text {
+  0%, 100% {
+    text-shadow: none;
+  }
+  25% {
+    text-shadow:
+      -2px 0 rgba(255, 107, 0, 0.7),
+      2px 0 rgba(0, 255, 255, 0.4);
+  }
+  50% {
+    text-shadow:
+      1px 0 rgba(255, 107, 0, 0.5),
+      -1px 0 rgba(0, 255, 255, 0.3);
+  }
+  75% {
+    text-shadow:
+      -1px 0 rgba(255, 107, 0, 0.6),
+      1px 0 rgba(0, 255, 255, 0.5);
+  }
+}
+
+/* ── Blinking Cursor (status indicator) ──────────── */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* ── Dithered Gradient ───────────────────────────── */
+.dither-fade {
+  position: relative;
+}
+
+.dither-fade::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  pointer-events: none;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVQIW2P4z8DwHwMDAwMAGOoD/VFhISYAAAAASUVORK5CYII=");
+  background-size: 2px 2px;
+  image-rendering: pixelated;
+  opacity: 0.5;
+}
+
+/* ── Pixel Loading Animation ─────────────────────── */
+@keyframes pixel-load {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+.pixel-loader {
+  height: 2px;
+  background: #222222;
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-loader::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #FF6B00;
+  animation: pixel-load 2s steps(20) infinite;
+  image-rendering: pixelated;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

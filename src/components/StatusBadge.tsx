@@ -19,8 +19,14 @@ const colors: Record<ProjectStatus, string> = {
 export function StatusBadge({ status }: { status: ProjectStatus }) {
   return (
     <span
-      className={`inline-block font-mono text-[10px] tracking-widest px-2 py-0.5 border ${colors[status]}`}
+      className={`inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest px-2 py-0.5 border ${colors[status]}`}
     >
+      {/* Pixel cursor indicator instead of dot */}
+      <span
+        className={`inline-block w-[6px] h-[10px] pixel-render ${
+          status === "live" ? "bg-accent cursor-blink" : "bg-current opacity-40"
+        }`}
+      />
       {labels[status]}
     </span>
   );
