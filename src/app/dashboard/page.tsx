@@ -94,17 +94,16 @@ export default function DashboardPage() {
   const [usage, setUsage] = useState<Record<string, UsageAgent>>({});
   const [usageResets, setUsageResets] = useState("");
   const [kodoData, setKodoData] = useState<{
-    activeTask: string | { name?: string; task?: string; status?: string; progress_percent?: number; blockedOn?: string | null };
-    recentOutputs: { file?: string; filename?: string; lines?: number; size?: number; summary?: string }[];
+    activeTask: string | { name: string; status: string; progress_percent?: number; blockedOn?: string | null };
+    recentOutputs: { file: string; lines: number; summary: string }[];
     cronJobs: { name: string; schedule: string; status: string }[];
   } | null>(null);
   const [needsWjp, setNeedsWjp] = useState<NeedsWjpItem[]>([]);
   const [treasury, setTreasury] = useState<Treasury | null>(null);
   const [brainDumps, setBrainDumps] = useState<BrainDump[]>([]);
-  type TaskItem = string | { task?: string; name?: string; owner?: string; project?: string; priority?: string; [key: string]: unknown };
   const [taskQueue, setTaskQueue] = useState<{
-    active: TaskItem[];
-    queued: TaskItem[];
+    active: string[];
+    queued: string[];
   }>({ active: [], queued: [] });
   const [lastUpdate, setLastUpdate] = useState("");
   const [expandedDump, setExpandedDump] = useState<string | null>(null);
@@ -275,12 +274,18 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="border-b border-border bg-bg/90 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <img
+              src="/pfp/wjp.png"
+              alt="WJP"
+              className="w-7 h-7 pixel-render border border-border"
+              style={{ borderRadius: 0, imageRendering: "pixelated" }}
+            />
             <h1 className="font-mono text-sm tracking-[0.3em] text-foreground uppercase glitch-text">
               WJP
             </h1>
             <span className="font-mono text-[10px] text-muted/30 tracking-wider">
-              MISSION CONTROL
+              Dashboard
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -405,13 +410,13 @@ export default function DashboardPage() {
                 <p className="font-mono text-xs text-foreground/80">
                   {typeof kodoData.activeTask === "string"
                     ? kodoData.activeTask
-                    : kodoData.activeTask.name || kodoData.activeTask.task || "—"}
+                    : kodoData.activeTask.name}
                 </p>
               ) : taskQueue.active.length > 0 ? (
                 <div className="space-y-1">
                   {taskQueue.active.map((t, i) => (
                     <p key={i} className="font-mono text-xs text-foreground/80">
-                      {typeof t === "string" ? t : t.task || t.name || "—"}
+                      {t}
                     </p>
                   ))}
                 </div>
@@ -427,7 +432,7 @@ export default function DashboardPage() {
                 <div className="space-y-1">
                   {taskQueue.queued.map((t, i) => (
                     <p key={i} className="font-mono text-xs text-muted/60">
-                      {typeof t === "string" ? t : t.task || t.name || "—"}
+                      {t}
                     </p>
                   ))}
                 </div>
@@ -608,10 +613,10 @@ export default function DashboardPage() {
                   className="flex items-baseline justify-between py-1"
                 >
                   <span className="font-mono text-[10px] text-foreground/50 truncate max-w-[300px]">
-                    {output.file || output.filename || "—"}
+                    {output.file}
                   </span>
                   <span className="font-mono text-[10px] text-muted/30">
-                    {output.lines ? `${output.lines}L` : output.size ? `${Math.round(output.size / 1024)}K` : "—"}
+                    {output.lines}L
                   </span>
                 </div>
               ))}
