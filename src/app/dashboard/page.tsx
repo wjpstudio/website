@@ -51,10 +51,13 @@ interface Treasury {
 }
 
 interface BrainDump {
-  slug: string;
-  title: string;
+  id: string;
   date: string;
-  content: string;
+  title: string;
+  source: "wjp+claud" | "studio";
+  summary: string;
+  keyDecisions: string[];
+  pending: string[];
 }
 
 // ── Blinking Cursor ──────────────────────────────────
@@ -235,34 +238,16 @@ export default function DashboardPage() {
         solUsd: `$${solUsd.toFixed(2)}`,
         total: `$${total.toFixed(2)}`,
       });
-    } catch {
-      /* silent */
-    }
+    } catch { /* silent */ }
 
-    // Brain dumps — static for now
-    setBrainDumps([
-      {
-        slug: "crypto-payments",
-        title: "Why Crypto Payments Are Inevitable for Digital Products",
-        date: "2026-03-10",
-        content:
-          "Credit cards were designed for physical retail in the 1950s. We're still using that infrastructure to sell PDFs...",
-      },
-      {
-        slug: "agents-wallets",
-        title: "AI Agents Need Wallets, Not API Keys",
-        date: "2026-03-08",
-        content:
-          "Every AI agent framework talks about 'tool use' — give the agent access to APIs, let it call functions. But none talk about money...",
-      },
-      {
-        slug: "building-public",
-        title: "Building in Public When Your Team Is AI",
-        date: "2026-03-06",
-        content:
-          "People ask how a solo operator runs a studio with four AI agents. The honest answer: the same way any small team works...",
-      },
-    ]);
+    // Brain dumps — live from mission-control
+    try {
+      const bdRes = await fetch(`${MC_BASE}/data/brain-dumps.json`);
+      if (bdRes.ok) {
+        const bd = await bdRes.json();
+        setBrainDumps((bd.dumps || []).slice(0, 10));
+      }
+    } catch { /* silent */ }
   }, []);
 
   useEffect(() => {
@@ -462,11 +447,11 @@ export default function DashboardPage() {
           </h2>
           <div className="space-y-0">
             {brainDumps.map((dump) => (
-              <div key={dump.slug}>
+              <div key={dump.id}>
                 <button
                   onClick={() =>
                     setExpandedDump(
-                      expandedDump === dump.slug ? null : dump.slug
+                      expandedDump === dump.id ? null : dump.id
                     )
                   }
                   className="w-full text-left py-3 flex items-baseline justify-between group"
@@ -474,15 +459,32 @@ export default function DashboardPage() {
                   <span className="font-mono text-base text-foreground group-hover:text-accent transition-colors">
                     {dump.title}
                   </span>
-                  <span className="font-mono text-[12px] text-muted/30 shrink-0 ml-4">
-                    {dump.date}
-                  </span>
+                  <div className="flex items-center gap-2 shrink-0 ml-4">
+                    <span className="font-mono text-[12px] text-muted/30">{dump.date}</span>
+                    <span className={`font-mono text-[12px] uppercase tracking-wider ${dump.source === "wjp+claud" ? "text-accent/50" : "text-muted/30"}`}>
+                      {dump.source === "wjp+claud" ? "WJP" : "Studio"}
+                    </span>
+                  </div>
                 </button>
-                {expandedDump === dump.slug && (
-                  <div className="border border-border bg-surface p-4 mb-3">
-                    <p className="font-mono text-base text-muted/60 leading-relaxed whitespace-pre-wrap">
-                      {dump.content}
-                    </p>
+                {expandedDump === dump.id && (
+                  <div className="border border-border bg-surface p-4 mb-3 space-y-3">
+                    <p className="font-mono text-[12px] text-muted/70 leading-relaxed">{dump.summary}</p>
+                    {dump.keyDecisions.length > 0 && (
+                      <div>
+                        <p className="font-mono text-[12px] text-accent uppercase tracking-wider mb-1">Decisions</p>
+                        {dump.keyDecisions.map((d, i) => (
+                          <p key={i} className="font-mono text-[12px] text-foreground/60">→ {d}</p>
+                        ))}
+                      </div>
+                    )}
+                    {dump.pending.length > 0 && (
+                      <div>
+                        <p className="font-mono text-[12px] text-amber-500 uppercase tracking-wider mb-1">Pending</p>
+                        {dump.pending.map((p, i) => (
+                          <p key={i} className="font-mono text-[12px] text-muted/50">□ {p}</p>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
                 <PixelDivider />
