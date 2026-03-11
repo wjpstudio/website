@@ -283,7 +283,11 @@ export default function DashboardPage() {
           <div className="flex items-center gap-4">
             <span className="font-mono text-[12px] text-muted/30">
               {lastUpdate
-                ? `${new Date(lastUpdate).toLocaleTimeString()}`
+                ? (() => {
+                    const diff = Math.round((Date.now() - new Date(lastUpdate).getTime()) / 60000);
+                    const ago = diff < 1 ? "just now" : diff < 60 ? `${diff}m ago` : `${Math.round(diff / 60)}h ago`;
+                    return `updated ${ago}`;
+                  })()
                 : "—"}
             </span>
             <button
