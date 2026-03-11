@@ -95,7 +95,7 @@ export default function DashboardPage() {
   const [usageResets, setUsageResets] = useState("");
   const [kodoData, setKodoData] = useState<{
     activeTask: string | { name: string; status: string; progress_percent?: number; blockedOn?: string | null };
-    recentOutputs: { file: string; lines: number; summary: string }[];
+    recentOutputs: { file?: string; filename?: string; lines?: number; size?: number; summary?: string }[];
     cronJobs: { name: string; schedule: string; status: string }[];
   } | null>(null);
   const [needsWjp, setNeedsWjp] = useState<NeedsWjpItem[]>([]);
@@ -122,9 +122,13 @@ export default function DashboardPage() {
         setAgents(d.agents || {});
         setLastUpdate(d.updatedAt || "");
         if (d.taskQueue) {
+          const normalize = (arr: unknown[]) =>
+            arr.map((t) =>
+              typeof t === "string" ? t : (t as Record<string, unknown>).task as string || JSON.stringify(t)
+            );
           setTaskQueue({
-            active: d.taskQueue.active || [],
-            queued: d.taskQueue.queued || [],
+            active: normalize(d.taskQueue.active || []),
+            queued: normalize(d.taskQueue.queued || []),
           });
         }
       }
@@ -416,7 +420,7 @@ export default function DashboardPage() {
                 <div className="space-y-1">
                   {taskQueue.active.map((t, i) => (
                     <p key={i} className="font-mono text-base text-foreground/80">
-                      {t}
+                      {typeof t === "string" ? t : (t as Record<string, unknown>).task as string || (t as Record<string, unknown>).name as string || "—"}
                     </p>
                   ))}
                 </div>
@@ -432,7 +436,7 @@ export default function DashboardPage() {
                 <div className="space-y-1">
                   {taskQueue.queued.map((t, i) => (
                     <p key={i} className="font-mono text-base text-muted/60">
-                      {t}
+                      {typeof t === "string" ? t : (t as Record<string, unknown>).task as string || (t as Record<string, unknown>).name as string || "—"}
                     </p>
                   ))}
                 </div>
@@ -613,10 +617,10 @@ export default function DashboardPage() {
                   className="flex items-baseline justify-between py-1"
                 >
                   <span className="font-mono text-[12px] text-foreground/50 truncate max-w-[300px]">
-                    {output.file}
+                    {output.file || "—"}
                   </span>
                   <span className="font-mono text-[12px] text-muted/30">
-                    {output.lines}L
+                    {output.lines ? `${output.lines}L` : output.size ? `${Math.round(output.size / 1024)}K` : "—"}
                   </span>
                 </div>
               ))}
