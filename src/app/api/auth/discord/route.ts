@@ -32,3 +32,4 @@ export async function GET() {
 
   return response;
 }
+// trigger redeploy after env vars
