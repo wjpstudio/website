@@ -94,16 +94,17 @@ export default function DashboardPage() {
   const [usage, setUsage] = useState<Record<string, UsageAgent>>({});
   const [usageResets, setUsageResets] = useState("");
   const [kodoData, setKodoData] = useState<{
-    activeTask: string | { name: string; status: string; progress_percent?: number; blockedOn?: string | null };
-    recentOutputs: { file: string; lines: number; summary: string }[];
+    activeTask: string | { name?: string; task?: string; status?: string; progress_percent?: number; blockedOn?: string | null };
+    recentOutputs: { file?: string; filename?: string; lines?: number; size?: number; summary?: string }[];
     cronJobs: { name: string; schedule: string; status: string }[];
   } | null>(null);
   const [needsWjp, setNeedsWjp] = useState<NeedsWjpItem[]>([]);
   const [treasury, setTreasury] = useState<Treasury | null>(null);
   const [brainDumps, setBrainDumps] = useState<BrainDump[]>([]);
+  type TaskItem = string | { task?: string; name?: string; owner?: string; project?: string; priority?: string; [key: string]: unknown };
   const [taskQueue, setTaskQueue] = useState<{
-    active: string[];
-    queued: string[];
+    active: TaskItem[];
+    queued: TaskItem[];
   }>({ active: [], queued: [] });
   const [lastUpdate, setLastUpdate] = useState("");
   const [expandedDump, setExpandedDump] = useState<string | null>(null);
@@ -404,13 +405,13 @@ export default function DashboardPage() {
                 <p className="font-mono text-xs text-foreground/80">
                   {typeof kodoData.activeTask === "string"
                     ? kodoData.activeTask
-                    : kodoData.activeTask.name}
+                    : kodoData.activeTask.name || kodoData.activeTask.task || "—"}
                 </p>
               ) : taskQueue.active.length > 0 ? (
                 <div className="space-y-1">
                   {taskQueue.active.map((t, i) => (
                     <p key={i} className="font-mono text-xs text-foreground/80">
-                      {t}
+                      {typeof t === "string" ? t : t.task || t.name || "—"}
                     </p>
                   ))}
                 </div>
@@ -426,7 +427,7 @@ export default function DashboardPage() {
                 <div className="space-y-1">
                   {taskQueue.queued.map((t, i) => (
                     <p key={i} className="font-mono text-xs text-muted/60">
-                      {t}
+                      {typeof t === "string" ? t : t.task || t.name || "—"}
                     </p>
                   ))}
                 </div>
@@ -607,10 +608,10 @@ export default function DashboardPage() {
                   className="flex items-baseline justify-between py-1"
                 >
                   <span className="font-mono text-[10px] text-foreground/50 truncate max-w-[300px]">
-                    {output.file}
+                    {output.file || output.filename || "—"}
                   </span>
                   <span className="font-mono text-[10px] text-muted/30">
-                    {output.lines}L
+                    {output.lines ? `${output.lines}L` : output.size ? `${Math.round(output.size / 1024)}K` : "—"}
                   </span>
                 </div>
               ))}
