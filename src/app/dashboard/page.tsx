@@ -267,7 +267,7 @@ export default function DashboardPage() {
               src="/pfp/wjp.png"
               alt="WJP"
               className="w-10 h-10 pixel-render border border-border"
-              style={{ borderRadius: 0, imageRendering: "pixelated" }}
+              style={{ borderRadius: 0, imageRendering: "pixelated", backgroundColor: "#ffffff" }}
             />
             <h1 className="font-mono text-base tracking-[0.3em] text-foreground uppercase glitch-text">
               WJP
