@@ -16,12 +16,24 @@ export async function POST(req: NextRequest) {
   }
 
   const response = NextResponse.json({ ok: true });
-  response.cookies.set("dashboard_auth", "1", {
-    httpOnly: true,
+
+  const cookieOptions = {
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "lax" as const,
     maxAge: 60 * 60 * 24 * 7, // 7 days
     path: "/",
+  };
+
+  // httpOnly cookie for middleware auth check
+  response.cookies.set("dashboard_auth", "1", {
+    ...cookieOptions,
+    httpOnly: true,
+  });
+
+  // Readable cookie so client nav can show/hide links
+  response.cookies.set("dashboard_ui", "1", {
+    ...cookieOptions,
+    httpOnly: false,
   });
 
   return response;
