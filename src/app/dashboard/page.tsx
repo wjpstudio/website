@@ -11,7 +11,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const token = document.cookie
       .split("; ")
-      .find((c) => c.startsWith("dashboard_auth="));
+      .find((c) => c.startsWith("dashboard_ui="));
     if (token) {
       setAuthenticated(true);
     }
@@ -30,6 +30,8 @@ export default function DashboardPage() {
 
     if (res.ok) {
       setAuthenticated(true);
+      // Force nav to pick up new auth cookies
+      window.dispatchEvent(new Event("auth-change"));
     } else {
       setError(true);
       setPassword("");
