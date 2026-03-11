@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { PixelDivider } from "@/components/PixelDivider";
 
 const BASE_RPC = "https://mainnet.base.org";
@@ -263,11 +264,14 @@ export default function DashboardPage() {
       <header className="border-b border-border bg-bg/90 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
+            <Image
               src="/pfp/wjp.png"
               alt="WJP"
-              className="w-10 h-10 pixel-render border border-border"
+              width={40}
+              height={40}
+              className="pixel-render border border-border"
               style={{ borderRadius: 0, imageRendering: "pixelated", backgroundColor: "#ffffff" }}
+              unoptimized={false}
             />
             <h1 className="font-mono text-base tracking-[0.3em] text-foreground uppercase glitch-text">
               WJP
@@ -305,11 +309,14 @@ export default function DashboardPage() {
               return (
                 <div key={key} className="bg-surface p-4">
                   <div className="flex items-center gap-3 mb-3">
-                    <img
+                    <Image
                       src={pfp}
                       alt={name}
-                      className="w-12 h-12 pixel-render border border-border"
+                      width={48}
+                      height={48}
+                      className="pixel-render border border-border"
                       style={{ borderRadius: 0, imageRendering: "pixelated", backgroundColor: "#ffffff" }}
+                      unoptimized={false}
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
