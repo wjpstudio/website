@@ -101,6 +101,10 @@ export default function DashboardPage() {
   const [needsWjp, setNeedsWjp] = useState<NeedsWjpItem[]>([]);
   const [treasury, setTreasury] = useState<Treasury | null>(null);
   const [brainDumps, setBrainDumps] = useState<BrainDump[]>([]);
+  const [products, setProducts] = useState<{
+    bundles: { id: string; name: string; price: number; includes: string[]; tagline: string; status: string; addedBy: string }[];
+    pipeline: { id: string; name: string; description: string; status: string; owner: string; addedBy: string }[];
+  }>({ bundles: [], pipeline: [] });
   const [taskQueue, setTaskQueue] = useState<{
     active: string[];
     queued: string[];
@@ -110,11 +114,12 @@ export default function DashboardPage() {
 
   const fetchData = useCallback(async () => {
     try {
-      const [dataRes, usageRes, kodoRes, needsRes] = await Promise.allSettled([
+      const [dataRes, usageRes, kodoRes, needsRes, productsRes] = await Promise.allSettled([
         fetch(`${MC_BASE}/data.json`),
         fetch(`${MC_BASE}/data/usage.json`),
         fetch(`${MC_BASE}/data/kodo.json`),
         fetch(`${MC_BASE}/needs-wjp.json`),
+        fetch(`${MC_BASE}/data/products.json`),
       ]);
 
       if (dataRes.status === "fulfilled" && dataRes.value.ok) {
@@ -146,6 +151,11 @@ export default function DashboardPage() {
       if (needsRes.status === "fulfilled" && needsRes.value.ok) {
         const n = await needsRes.value.json();
         setNeedsWjp(n.items || []);
+      }
+
+      if (productsRes.status === "fulfilled" && productsRes.value.ok) {
+        const p = await productsRes.value.json();
+        setProducts({ bundles: p.bundles || [], pipeline: p.pipeline || [] });
       }
     } catch {
       /* silent */
@@ -484,6 +494,67 @@ export default function DashboardPage() {
             ))}
           </div>
         </section>
+
+        <PixelDivider accent />
+
+        {/* ── Products ────────────────────────────── */}
+        {(products.bundles.length > 0 || products.pipeline.length > 0) && (
+          <section className="my-8">
+            <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
+              Products
+            </h2>
+
+            {products.bundles.length > 0 && (
+              <div className="mb-6">
+                <p className="font-mono text-[12px] text-muted uppercase tracking-wider mb-3">Bundles</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1px] bg-border">
+                  {products.bundles.map((b) => (
+                    <div key={b.id} className="bg-surface p-4">
+                      <div className="flex items-baseline justify-between mb-1">
+                        <span className="font-mono text-base text-foreground">{b.name}</span>
+                        <span className="font-mono text-base text-accent">${b.price}</span>
+                      </div>
+                      <p className="font-mono text-[12px] text-muted/60 mb-2">{b.tagline}</p>
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {b.includes.map((p) => (
+                          <span key={p} className="font-mono text-[12px] text-muted border border-border px-1">{p}</span>
+                        ))}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className={`font-mono text-[12px] uppercase tracking-wider ${b.status === "ready" ? "text-green-500" : "text-amber-500"}`}>
+                          {b.status}
+                        </span>
+                        <span className="font-mono text-[12px] text-muted/40">
+                          {b.addedBy === "wjp+claud" ? "WJP + Claud" : "Studio"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {products.pipeline.length > 0 && (
+              <div>
+                <p className="font-mono text-[12px] text-muted uppercase tracking-wider mb-3">Pipeline</p>
+                <div className="border border-border bg-surface divide-y divide-border">
+                  {products.pipeline.map((item) => (
+                    <div key={item.id} className="p-3 flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-mono text-[12px] text-foreground/80">{item.name}</p>
+                        <p className="font-mono text-[12px] text-muted/50 truncate">{item.description}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className={`font-mono text-[12px] uppercase ${item.status === "queued" ? "text-amber-500" : "text-muted/40"}`}>{item.status}</p>
+                        <p className="font-mono text-[12px] text-muted/40">{item.addedBy === "wjp+claud" ? "WJP + Claud" : "Studio"}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
 
         <PixelDivider accent />
 
