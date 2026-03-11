@@ -240,13 +240,20 @@ export default function DashboardPage() {
       });
     } catch { /* silent */ }
 
-    // Brain dumps — live from mission-control
+    // Brain dumps — fetch both files (studio + wjp+claud), merge, sort
     try {
-      const bdRes = await fetch(`${MC_BASE}/data/brain-dumps.json`);
-      if (bdRes.ok) {
-        const bd = await bdRes.json();
-        setBrainDumps((bd.dumps || []).slice(0, 10));
-      }
+      const [studioRes, wjpRes] = await Promise.allSettled([
+        fetch(`${MC_BASE}/data/brain-dumps-studio.json`),
+        fetch(`${MC_BASE}/data/brain-dumps-wjp.json`),
+      ]);
+      const studioDumps = studioRes.status === "fulfilled" && studioRes.value.ok
+        ? ((await studioRes.value.json()).dumps || []) : [];
+      const wjpDumps = wjpRes.status === "fulfilled" && wjpRes.value.ok
+        ? ((await wjpRes.value.json()).dumps || []) : [];
+      const merged = [...studioDumps, ...wjpDumps]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 20);
+      setBrainDumps(merged);
     } catch { /* silent */ }
   }, []);
 
