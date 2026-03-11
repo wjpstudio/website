@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { PixelDivider } from "@/components/PixelDivider";
 
-const MC_BASE = "https://kikaionchain.github.io/dashboard";
 const BASE_RPC = "https://mainnet.base.org";
 const SOL_RPC = "https://solana-rpc.publicnode.com";
 const TREASURY_BASE = "0x51e0c3cb17e8AAb6391F40468A34E8E94aa1166E";
@@ -117,16 +116,12 @@ export default function DashboardPage() {
 
   const fetchData = useCallback(async () => {
     try {
-      const [dataRes, usageRes, kodoRes, needsRes, productsRes] = await Promise.allSettled([
-        fetch(`${MC_BASE}/data.json`),
-        fetch(`${MC_BASE}/data/usage.json`),
-        fetch(`${MC_BASE}/data/kodo.json`),
-        fetch(`${MC_BASE}/needs-wjp.json`),
-        fetch(`${MC_BASE}/data/products.json`),
-      ]);
+      // Single API route — fetches all data from private wjpstudio/dashboard repo server-side
+      const dashRes = await fetch("/api/dashboard-data");
+      const dashData = dashRes.ok ? await dashRes.json() : {};
 
-      if (dataRes.status === "fulfilled" && dataRes.value.ok) {
-        const d = await dataRes.value.json();
+      const d = dashData.data;
+      if (d) {
         setAgents(d.agents || {});
         setLastUpdate(d.updatedAt || "");
         if (d.taskQueue) {
@@ -141,25 +136,26 @@ export default function DashboardPage() {
         }
       }
 
-      if (usageRes.status === "fulfilled" && usageRes.value.ok) {
-        const u = await usageRes.value.json();
+      const u = dashData.usage;
+      if (u) {
         setUsage(u.agents || {});
         setUsageResets(u.weekResets || "");
       }
 
-      if (kodoRes.status === "fulfilled" && kodoRes.value.ok) {
-        setKodoData(await kodoRes.value.json());
-      }
+      if (dashData.kodo) setKodoData(dashData.kodo);
 
-      if (needsRes.status === "fulfilled" && needsRes.value.ok) {
-        const n = await needsRes.value.json();
-        setNeedsWjp(n.items || []);
-      }
+      if (dashData.needs) setNeedsWjp(dashData.needs.items || []);
 
-      if (productsRes.status === "fulfilled" && productsRes.value.ok) {
-        const p = await productsRes.value.json();
-        setProducts({ bundles: p.bundles || [], pipeline: p.pipeline || [] });
-      }
+      const p = dashData.products;
+      if (p) setProducts({ bundles: p.bundles || [], pipeline: p.pipeline || [] });
+
+      // Brain dumps — merge studio + wjp, sort by date
+      const studioDumps: BrainDump[] = dashData.brainDumpsStudio?.dumps || [];
+      const wjpDumps: BrainDump[] = dashData.brainDumpsWjp?.dumps || [];
+      const merged = [...studioDumps, ...wjpDumps]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 20);
+      setBrainDumps(merged);
     } catch {
       /* silent */
     }
@@ -240,21 +236,7 @@ export default function DashboardPage() {
       });
     } catch { /* silent */ }
 
-    // Brain dumps — fetch both files (studio + wjp+claud), merge, sort
-    try {
-      const [studioRes, wjpRes] = await Promise.allSettled([
-        fetch(`${MC_BASE}/data/brain-dumps-studio.json`),
-        fetch(`${MC_BASE}/data/brain-dumps-wjp.json`),
-      ]);
-      const studioDumps = studioRes.status === "fulfilled" && studioRes.value.ok
-        ? ((await studioRes.value.json()).dumps || []) : [];
-      const wjpDumps = wjpRes.status === "fulfilled" && wjpRes.value.ok
-        ? ((await wjpRes.value.json()).dumps || []) : [];
-      const merged = [...studioDumps, ...wjpDumps]
-        .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, 20);
-      setBrainDumps(merged);
-    } catch { /* silent */ }
+
   }, []);
 
   useEffect(() => {
