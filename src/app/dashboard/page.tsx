@@ -352,38 +352,34 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  {agent && (
-                    <div className="space-y-1 text-[12px] font-mono mb-3">
-                      <div className="flex justify-between">
-                        <span className="text-muted">task</span>
-                        <span className="text-foreground/60 truncate max-w-[120px] text-right">
-                          {agent.workingOn || "idle"}
-                        </span>
-                      </div>
-                      {agent.contextPct !== null && (
-                        <div className="flex justify-between">
-                          <span className="text-muted">ctx</span>
-                          <span
-                            className={
-                              agent.contextPct >= 80
-                                ? "text-red-500"
-                                : "text-foreground/60"
-                            }
-                          >
-                            {agent.contextPct}%
-                          </span>
-                        </div>
-                      )}
-                      <div className="flex justify-between">
-                        <span className="text-muted">model</span>
-                        <span className="text-foreground/60">
-                          {agent.model
-                            ?.replace("claude-", "")
-                            .replace("-4-6", "") || "—"}
-                        </span>
-                      </div>
+                  <div className="space-y-1 text-[12px] font-mono mb-3">
+                    <div className="flex justify-between">
+                      <span className="text-muted">task</span>
+                      <span className="text-foreground/60 truncate max-w-[120px] text-right">
+                        {agent?.workingOn || "idle"}
+                      </span>
                     </div>
-                  )}
+                    <div className="flex justify-between">
+                      <span className="text-muted">ctx</span>
+                      <span
+                        className={
+                          agent?.contextPct != null && agent.contextPct >= 80
+                            ? "text-red-500"
+                            : "text-foreground/60"
+                        }
+                      >
+                        {agent?.contextPct != null ? `${agent.contextPct}%` : "—"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted">model</span>
+                      <span className="text-foreground/60">
+                        {agent?.model
+                          ?.replace("claude-", "")
+                          .replace("-4-6", "") || "—"}
+                      </span>
+                    </div>
+                  </div>
 
                   {u && (
                     <div className="space-y-1 pt-2 border-t border-border/50">
