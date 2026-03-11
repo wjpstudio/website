@@ -13,10 +13,10 @@ const COINGECKO =
   "https://api.coingecko.com/api/v3/simple/price?ids=ethereum,solana&vs_currencies=usd";
 
 const AGENTS = [
+  { key: "claud", name: "Claud", role: "Builder", pfp: "/pfp/claud.png" },
   { key: "kikai", name: "Kikai", role: "Operator", pfp: "/pfp/kikai.png" },
   { key: "yama", name: "Yama", role: "Grower", pfp: "/pfp/yama.png" },
   { key: "kodo", name: "Kodo", role: "Builder", pfp: "/pfp/kodo.png" },
-  { key: "claud", name: "Claud", role: "Builder", pfp: "/pfp/claud.png" },
 ];
 
 interface AgentData {
