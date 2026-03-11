@@ -143,15 +143,11 @@ export default function DashboardPage() {
         const n = await needsRes.value.json();
         setNeedsWjp(n.items || []);
       }
-
-      await fetchTreasury();
-      await fetchBrainDumps();
     } catch {
       /* silent */
     }
-  }, []);
 
-  async function fetchTreasury() {
+    // Treasury — on-chain balance fetches
     try {
       const [ethRes, usdcRes, solRes, priceRes] = await Promise.allSettled([
         fetch(BASE_RPC, {
@@ -228,11 +224,8 @@ export default function DashboardPage() {
     } catch {
       /* silent */
     }
-  }
 
-  async function fetchBrainDumps() {
-    // Brain dumps are static — fetch from the content API
-    // For now, hardcode the known dumps until we add an API route
+    // Brain dumps — static for now
     setBrainDumps([
       {
         slug: "crypto-payments",
@@ -256,7 +249,7 @@ export default function DashboardPage() {
           "People ask how a solo operator runs a studio with four AI agents. The honest answer: the same way any small team works...",
       },
     ]);
-  }
+  }, []);
 
   useEffect(() => {
     // Middleware handles auth server-side — no client-side cookie check needed
