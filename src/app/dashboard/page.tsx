@@ -99,7 +99,7 @@ export default function DashboardPage() {
   const [kodoData, setKodoData] = useState<{
     activeTask: string | { name: string; status: string; progress_percent?: number; blockedOn?: string | null };
     recentOutputs: { file?: string; filename?: string; lines?: number; size?: number; summary?: string }[];
-    cronJobs: { name: string; schedule: string; status: string }[];
+    cronJobs: { name: string; schedule: string; status: string; lastRunAgo?: string }[];
   } | null>(null);
   const [needsWjp, setNeedsWjp] = useState<NeedsWjpItem[]>([]);
   const [treasury, setTreasury] = useState<Treasury | null>(null);
@@ -664,7 +664,14 @@ export default function DashboardPage() {
                     <span className="font-mono text-[12px] text-muted/40">
                       {job.schedule}
                     </span>
-                    <Cursor active={job.status === "active"} />
+                    <span className="font-mono text-[12px] text-muted/30">
+                      {job.lastRunAgo || "—"}
+                    </span>
+                    <span className={`inline-block w-2 h-2 rounded-full ${
+                      job.status === "ok" ? "bg-green-500" :
+                      job.status === "stale" ? "bg-yellow-500" :
+                      job.status === "error" ? "bg-red-500" : "bg-muted/30"
+                    }`} />
                   </div>
                 </div>
               ))}
