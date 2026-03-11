@@ -269,8 +269,8 @@ export default function DashboardPage() {
               alt="WJP"
               width={40}
               height={40}
-              className="pixel-render border border-border"
-              style={{ borderRadius: 0, imageRendering: "pixelated", backgroundColor: "#ffffff" }}
+              className="border border-border"
+              style={{ borderRadius: 0, backgroundColor: "#ffffff" }}
               unoptimized={false}
             />
             <h1 className="font-mono text-base tracking-[0.3em] text-foreground uppercase glitch-text">
@@ -314,8 +314,8 @@ export default function DashboardPage() {
                       alt={name}
                       width={48}
                       height={48}
-                      className="pixel-render border border-border"
-                      style={{ borderRadius: 0, imageRendering: "pixelated", backgroundColor: "#ffffff" }}
+                      className="border border-border"
+                      style={{ borderRadius: 0, backgroundColor: "#ffffff" }}
                       unoptimized={false}
                     />
                     <div className="flex-1 min-w-0">
