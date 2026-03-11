@@ -75,13 +75,13 @@ function UsageBar({ label, pct }: { label: string; pct: number | null }) {
     pct >= 90 ? "bg-red-500" : pct >= 70 ? "bg-amber-500" : "bg-accent";
   return (
     <div className="flex items-center gap-3">
-      <span className="font-mono text-[10px] text-muted w-14 uppercase tracking-wider">
+      <span className="font-mono text-[12px] text-muted w-14 uppercase tracking-wider">
         {label}
       </span>
       <div className="flex-1 h-[2px] bg-border pixel-render">
         <div className={`h-full ${color}`} style={{ width: `${pct}%` }} />
       </div>
-      <span className="font-mono text-[10px] text-muted w-8 text-right">
+      <span className="font-mono text-[12px] text-muted w-8 text-right">
         {pct}%
       </span>
     </div>
@@ -281,22 +281,22 @@ export default function DashboardPage() {
               className="w-7 h-7 pixel-render border border-border"
               style={{ borderRadius: 0, imageRendering: "pixelated" }}
             />
-            <h1 className="font-mono text-sm tracking-[0.3em] text-foreground uppercase glitch-text">
+            <h1 className="font-mono text-base tracking-[0.3em] text-foreground uppercase glitch-text">
               WJP
             </h1>
-            <span className="font-mono text-[10px] text-muted/30 tracking-wider">
+            <span className="font-mono text-[12px] text-muted/30 tracking-wider">
               Dashboard
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[10px] text-muted/30">
+            <span className="font-mono text-[12px] text-muted/30">
               {lastUpdate
                 ? `${new Date(lastUpdate).toLocaleTimeString()}`
                 : "—"}
             </span>
             <button
               onClick={handleLogout}
-              className="font-mono text-[10px] text-muted hover:text-foreground transition-colors tracking-wider uppercase"
+              className="font-mono text-[12px] text-muted hover:text-foreground transition-colors tracking-wider uppercase"
             >
               Exit
             </button>
@@ -307,7 +307,7 @@ export default function DashboardPage() {
       <div className="mx-auto max-w-6xl px-6 py-8">
         {/* ── Agents ──────────────────────────────── */}
         <section className="mb-8">
-          <h2 className="font-mono text-[10px] tracking-[0.25em] text-accent uppercase mb-4">
+          <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
             Agents
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-border">
@@ -328,18 +328,18 @@ export default function DashboardPage() {
                         <Cursor
                           active={agent?.status === "active"}
                         />
-                        <span className="font-mono text-sm text-foreground">
+                        <span className="font-mono text-base text-foreground">
                           {name}
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] text-muted/50 uppercase tracking-wider">
+                      <span className="font-mono text-[12px] text-muted/50 uppercase tracking-wider">
                         {role}
                       </span>
                     </div>
                   </div>
 
                   {agent && (
-                    <div className="space-y-1 text-[10px] font-mono mb-3">
+                    <div className="space-y-1 text-[12px] font-mono mb-3">
                       <div className="flex justify-between">
                         <span className="text-muted">task</span>
                         <span className="text-foreground/60 truncate max-w-[120px] text-right">
@@ -383,7 +383,7 @@ export default function DashboardPage() {
             })}
           </div>
           {usageResets && (
-            <p className="font-mono text-[10px] text-muted/20 mt-1 text-right">
+            <p className="font-mono text-[12px] text-muted/20 mt-1 text-right">
               resets{" "}
               {new Date(usageResets).toLocaleDateString("en-US", {
                 weekday: "short",
@@ -398,16 +398,16 @@ export default function DashboardPage() {
 
         {/* ── Task Board ──────────────────────────── */}
         <section className="my-8">
-          <h2 className="font-mono text-[10px] tracking-[0.25em] text-accent uppercase mb-4">
+          <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
             Tasks
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1px] bg-border">
             <div className="bg-surface p-4">
-              <p className="font-mono text-[10px] text-muted uppercase tracking-wider mb-3">
+              <p className="font-mono text-[12px] text-muted uppercase tracking-wider mb-3">
                 Active
               </p>
               {kodoData?.activeTask ? (
-                <p className="font-mono text-xs text-foreground/80">
+                <p className="font-mono text-base text-foreground/80">
                   {typeof kodoData.activeTask === "string"
                     ? kodoData.activeTask
                     : kodoData.activeTask.name}
@@ -415,29 +415,29 @@ export default function DashboardPage() {
               ) : taskQueue.active.length > 0 ? (
                 <div className="space-y-1">
                   {taskQueue.active.map((t, i) => (
-                    <p key={i} className="font-mono text-xs text-foreground/80">
+                    <p key={i} className="font-mono text-base text-foreground/80">
                       {t}
                     </p>
                   ))}
                 </div>
               ) : (
-                <p className="font-mono text-xs text-muted/30">none</p>
+                <p className="font-mono text-base text-muted/30">none</p>
               )}
             </div>
             <div className="bg-surface p-4">
-              <p className="font-mono text-[10px] text-muted uppercase tracking-wider mb-3">
+              <p className="font-mono text-[12px] text-muted uppercase tracking-wider mb-3">
                 Queued
               </p>
               {taskQueue.queued.length > 0 ? (
                 <div className="space-y-1">
                   {taskQueue.queued.map((t, i) => (
-                    <p key={i} className="font-mono text-xs text-muted/60">
+                    <p key={i} className="font-mono text-base text-muted/60">
                       {t}
                     </p>
                   ))}
                 </div>
               ) : (
-                <p className="font-mono text-xs text-muted/30">empty</p>
+                <p className="font-mono text-base text-muted/30">empty</p>
               )}
             </div>
           </div>
@@ -447,7 +447,7 @@ export default function DashboardPage() {
 
         {/* ── Brain Dumps ─────────────────────────── */}
         <section className="my-8">
-          <h2 className="font-mono text-[10px] tracking-[0.25em] text-accent uppercase mb-4">
+          <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
             Brain Dumps
           </h2>
           <div className="space-y-0">
@@ -461,16 +461,16 @@ export default function DashboardPage() {
                   }
                   className="w-full text-left py-3 flex items-baseline justify-between group"
                 >
-                  <span className="font-mono text-xs text-foreground group-hover:text-accent transition-colors">
+                  <span className="font-mono text-base text-foreground group-hover:text-accent transition-colors">
                     {dump.title}
                   </span>
-                  <span className="font-mono text-[10px] text-muted/30 shrink-0 ml-4">
+                  <span className="font-mono text-[12px] text-muted/30 shrink-0 ml-4">
                     {dump.date}
                   </span>
                 </button>
                 {expandedDump === dump.slug && (
                   <div className="border border-border bg-surface p-4 mb-3">
-                    <p className="font-mono text-xs text-muted/60 leading-relaxed whitespace-pre-wrap">
+                    <p className="font-mono text-base text-muted/60 leading-relaxed whitespace-pre-wrap">
                       {dump.content}
                     </p>
                   </div>
@@ -485,7 +485,7 @@ export default function DashboardPage() {
 
         {/* ── Treasury ────────────────────────────── */}
         <section className="my-8">
-          <h2 className="font-mono text-[10px] tracking-[0.25em] text-accent uppercase mb-4">
+          <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
             Treasury
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-[1px] bg-border">
@@ -508,12 +508,12 @@ export default function DashboardPage() {
               { label: "USDC (Sol)", val: "$0.00", sub: null },
             ].map((item) => (
               <div key={item.label} className="bg-surface p-4">
-                <p className="font-mono text-[10px] text-muted uppercase tracking-wider mb-1">
+                <p className="font-mono text-[12px] text-muted uppercase tracking-wider mb-1">
                   {item.label}
                 </p>
-                <p className="font-mono text-sm text-foreground">{item.val}</p>
+                <p className="font-mono text-base text-foreground">{item.val}</p>
                 {item.sub && (
-                  <p className="font-mono text-[10px] text-muted/40 mt-0.5">
+                  <p className="font-mono text-[12px] text-muted/40 mt-0.5">
                     {item.sub}
                   </p>
                 )}
@@ -523,10 +523,10 @@ export default function DashboardPage() {
           {treasury?.total && (
             <div className="border-t border-border bg-surface p-4 mt-[1px]">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] text-accent uppercase tracking-wider">
+                <span className="font-mono text-[12px] text-accent uppercase tracking-wider">
                   Total
                 </span>
-                <span className="font-mono text-lg text-foreground">
+                <span className="font-mono text-xl text-foreground">
                   {treasury.total}
                 </span>
               </div>
@@ -539,7 +539,7 @@ export default function DashboardPage() {
         {/* ── Needs WJP ───────────────────────────── */}
         {needsWjp.length > 0 && (
           <section className="my-8">
-            <h2 className="font-mono text-[10px] tracking-[0.25em] text-accent uppercase mb-4">
+            <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
               Needs WJP
             </h2>
             <div className="space-y-[1px] bg-border">
@@ -547,7 +547,7 @@ export default function DashboardPage() {
                 <div key={i} className="bg-surface p-4">
                   <div className="flex items-center gap-2 mb-1">
                     <span
-                      className={`font-mono text-[10px] tracking-wider uppercase px-1.5 py-0.5 border ${
+                      className={`font-mono text-[12px] tracking-wider uppercase px-1.5 py-0.5 border ${
                         item.priority === "blocking"
                           ? "border-red-500/40 text-red-500"
                           : item.priority === "enabling"
@@ -557,11 +557,11 @@ export default function DashboardPage() {
                     >
                       {item.priority}
                     </span>
-                    <span className="font-mono text-xs text-foreground">
+                    <span className="font-mono text-base text-foreground">
                       {item.title}
                     </span>
                   </div>
-                  <p className="font-mono text-[10px] text-muted/50">
+                  <p className="font-mono text-[12px] text-muted/50">
                     {item.ask}
                   </p>
                 </div>
@@ -575,7 +575,7 @@ export default function DashboardPage() {
         {/* ── Cron Health ─────────────────────────── */}
         {kodoData?.cronJobs && kodoData.cronJobs.length > 0 && (
           <section className="my-8">
-            <h2 className="font-mono text-[10px] tracking-[0.25em] text-accent uppercase mb-4">
+            <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
               Cron Jobs
             </h2>
             <div className="border border-border bg-surface p-4">
@@ -584,11 +584,11 @@ export default function DashboardPage() {
                   key={i}
                   className="flex items-center justify-between py-1.5"
                 >
-                  <span className="font-mono text-[10px] text-foreground/60">
+                  <span className="font-mono text-[12px] text-foreground/60">
                     {job.name}
                   </span>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-[10px] text-muted/40">
+                    <span className="font-mono text-[12px] text-muted/40">
                       {job.schedule}
                     </span>
                     <Cursor active={job.status === "active"} />
@@ -603,7 +603,7 @@ export default function DashboardPage() {
         {kodoData?.recentOutputs && kodoData.recentOutputs.length > 0 && (
           <section className="my-8">
             <PixelDivider />
-            <h2 className="font-mono text-[10px] tracking-[0.25em] text-muted uppercase mb-4 mt-8">
+            <h2 className="font-mono text-[12px] tracking-[0.25em] text-muted uppercase mb-4 mt-8">
               Recent Outputs
             </h2>
             <div className="border border-border bg-surface p-4">
@@ -612,10 +612,10 @@ export default function DashboardPage() {
                   key={i}
                   className="flex items-baseline justify-between py-1"
                 >
-                  <span className="font-mono text-[10px] text-foreground/50 truncate max-w-[300px]">
+                  <span className="font-mono text-[12px] text-foreground/50 truncate max-w-[300px]">
                     {output.file}
                   </span>
-                  <span className="font-mono text-[10px] text-muted/30">
+                  <span className="font-mono text-[12px] text-muted/30">
                     {output.lines}L
                   </span>
                 </div>
@@ -628,10 +628,10 @@ export default function DashboardPage() {
       {/* Footer */}
       <footer className="border-t border-border mt-8">
         <div className="mx-auto max-w-6xl px-6 py-6 flex items-center justify-between">
-          <span className="font-mono text-[10px] text-muted/20 tracking-widest">
+          <span className="font-mono text-[12px] text-muted/20 tracking-widest">
             wjp.studio
           </span>
-          <span className="font-mono text-[10px] text-muted/20">2026</span>
+          <span className="font-mono text-[12px] text-muted/20">2026</span>
         </div>
       </footer>
     </div>
