@@ -263,7 +263,7 @@ export default function DashboardPage() {
     // Middleware handles auth server-side — no client-side cookie check needed
     // (dashboard_auth is httpOnly, JS can't read it)
     fetchData();
-    const interval = setInterval(fetchData, 5 * 60 * 1000);
+    const interval = setInterval(fetchData, 60 * 1000);
     return () => clearInterval(interval);
   }, [fetchData]);
 
@@ -300,7 +300,11 @@ export default function DashboardPage() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[12px] text-muted/30">
+            <span className="font-mono text-[12px] text-muted/30 flex items-center gap-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500/50" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
+              </span>
               {lastUpdate
                 ? (() => {
                     const diff = Math.round((Date.now() - new Date(lastUpdate).getTime()) / 60000);
