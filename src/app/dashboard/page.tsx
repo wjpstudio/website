@@ -694,43 +694,69 @@ export default function DashboardPage() {
         <PixelDivider />
 
         {/* ── Cron Health ─────────────────────────── */}
-        {allCronJobs.length > 0 && (
+        {allCronJobs.length > 0 && (() => {
+          const grouped = allCronJobs.reduce((acc, job) => {
+            (acc[job.agent] = acc[job.agent] || []).push(job);
+            return acc;
+          }, {} as Record<string, typeof allCronJobs>);
+
+          return (
           <section className="my-8">
             <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
               Cron Jobs
+              <span className="text-muted/30 ml-2">{allCronJobs.length}</span>
             </h2>
-            <div className="border border-border bg-surface p-4">
-              {allCronJobs.map((job, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between py-1.5"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-muted/30 uppercase w-10">
-                      {job.agent}
-                    </span>
-                    <span className="font-mono text-[12px] text-foreground/60">
-                      {job.name}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[12px] text-muted/40">
-                      {job.schedule}
-                    </span>
-                    <span className="font-mono text-[12px] text-muted/30">
-                      {job.lastRunAgo || "—"}
-                    </span>
-                    <span className={`inline-block w-2 h-2 rounded-full ${
-                      job.status === "ok" ? "bg-green-500" :
-                      job.status === "stale" ? "bg-yellow-500" :
-                      job.status === "error" ? "bg-red-500" : "bg-muted/30"
-                    }`} />
-                  </div>
-                </div>
-              ))}
+            {/* Summary row — always visible */}
+            <div className="border border-border bg-surface p-4 space-y-2">
+              {Object.entries(grouped).map(([agent, jobs]) => {
+                const errors = jobs.filter(j => j.status === "error").length;
+                const stale = jobs.filter(j => j.status === "stale").length;
+
+                return (
+                  <details key={agent} open={errors > 0 || stale > 0}>
+                    <summary className="flex items-center justify-between cursor-pointer py-1 select-none">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[12px] text-foreground/70 uppercase">
+                          {agent}
+                        </span>
+                        <span className="font-mono text-[10px] text-muted/30">
+                          {jobs.length} jobs
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        {errors > 0 && <span className="font-mono text-[10px] text-red-500">{errors} err</span>}
+                        {stale > 0 && <span className="font-mono text-[10px] text-yellow-500">{stale} stale</span>}
+                        {errors === 0 && stale === 0 && (
+                          <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
+                        )}
+                      </div>
+                    </summary>
+                    <div className="pl-4 mt-1 space-y-0.5">
+                      {jobs.map((job, i) => (
+                        <div key={i} className="flex items-center justify-between py-0.5">
+                          <span className="font-mono text-[11px] text-foreground/50">
+                            {job.name}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-[10px] text-muted/30">
+                              {job.lastRunAgo || "—"}
+                            </span>
+                            <span className={`inline-block w-1.5 h-1.5 rounded-full ${
+                              job.status === "ok" ? "bg-green-500" :
+                              job.status === "stale" ? "bg-yellow-500" :
+                              job.status === "error" ? "bg-red-500" : "bg-muted/30"
+                            }`} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                );
+              })}
             </div>
           </section>
-        )}
+          );
+        })()}
 
         {/* ── Recent Outputs ──────────────────────── */}
         {allOutputs.length > 0 && (
