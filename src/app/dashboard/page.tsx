@@ -101,6 +101,8 @@ export default function DashboardPage() {
     recentOutputs: { file?: string; filename?: string; lines?: number; size?: number; summary?: string }[];
     cronJobs: { name: string; schedule: string; status: string; lastRunAgo?: string }[];
   } | null>(null);
+  const [allCronJobs, setAllCronJobs] = useState<{ name: string; schedule: string; status: string; lastRunAgo?: string; agent: string }[]>([]);
+  const [allOutputs, setAllOutputs] = useState<{ file?: string; filename?: string; lines?: number; size?: number; agent: string }[]>([]);
   const [needsWjp, setNeedsWjp] = useState<NeedsWjpItem[]>([]);
   const [treasury, setTreasury] = useState<Treasury | null>(null);
   const [brainDumps, setBrainDumps] = useState<BrainDump[]>([]);
@@ -146,13 +148,15 @@ export default function DashboardPage() {
       if (dashData.kodo) setKodoData(dashData.kodo);
 
       // Merge per-agent JSON into agents state for richer card data
+      const agentFeeds = [
+        ["kodo", dashData.kodo],
+        ["kikai", dashData.kikai],
+        ["yama", dashData.yama],
+      ] as const;
+
       setAgents((prev) => {
         const merged = { ...prev };
-        for (const [key, agentJson] of [
-          ["kodo", dashData.kodo],
-          ["kikai", dashData.kikai],
-          ["yama", dashData.yama],
-        ] as const) {
+        for (const [key, agentJson] of agentFeeds) {
           if (!agentJson) continue;
           const existing = merged[key] || {};
           merged[key] = {
@@ -163,6 +167,21 @@ export default function DashboardPage() {
         }
         return merged;
       });
+
+      // Aggregate cron jobs and outputs from all agent feeds
+      const allCronJobs: { name: string; schedule: string; status: string; lastRunAgo?: string; agent: string }[] = [];
+      const allOutputs: { file?: string; filename?: string; lines?: number; size?: number; agent: string }[] = [];
+      for (const [key, agentJson] of agentFeeds) {
+        if (!agentJson) continue;
+        for (const job of agentJson.cronJobs || []) {
+          allCronJobs.push({ ...job, agent: key });
+        }
+        for (const output of agentJson.recentOutputs || []) {
+          allOutputs.push({ ...output, agent: key });
+        }
+      }
+      setAllCronJobs(allCronJobs);
+      setAllOutputs(allOutputs);
 
       if (dashData.needs) setNeedsWjp(dashData.needs.items || []);
 
@@ -675,20 +694,25 @@ export default function DashboardPage() {
         <PixelDivider />
 
         {/* ── Cron Health ─────────────────────────── */}
-        {kodoData?.cronJobs && kodoData.cronJobs.length > 0 && (
+        {allCronJobs.length > 0 && (
           <section className="my-8">
             <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
               Cron Jobs
             </h2>
             <div className="border border-border bg-surface p-4">
-              {kodoData.cronJobs.map((job, i) => (
+              {allCronJobs.map((job, i) => (
                 <div
                   key={i}
                   className="flex items-center justify-between py-1.5"
                 >
-                  <span className="font-mono text-[12px] text-foreground/60">
-                    {job.name}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] text-muted/30 uppercase w-10">
+                      {job.agent}
+                    </span>
+                    <span className="font-mono text-[12px] text-foreground/60">
+                      {job.name}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-[12px] text-muted/40">
                       {job.schedule}
@@ -709,21 +733,26 @@ export default function DashboardPage() {
         )}
 
         {/* ── Recent Outputs ──────────────────────── */}
-        {kodoData?.recentOutputs && kodoData.recentOutputs.length > 0 && (
+        {allOutputs.length > 0 && (
           <section className="my-8">
             <PixelDivider />
             <h2 className="font-mono text-[12px] tracking-[0.25em] text-muted uppercase mb-4 mt-8">
               Recent Outputs
             </h2>
             <div className="border border-border bg-surface p-4">
-              {kodoData.recentOutputs.slice(0, 8).map((output, i) => (
+              {allOutputs.slice(0, 12).map((output, i) => (
                 <div
                   key={i}
                   className="flex items-baseline justify-between py-1"
                 >
-                  <span className="font-mono text-[12px] text-foreground/50 truncate max-w-[300px]">
-                    {output.file || output.filename || "—"}
-                  </span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-mono text-[10px] text-muted/30 uppercase w-10">
+                      {output.agent}
+                    </span>
+                    <span className="font-mono text-[12px] text-foreground/50 truncate max-w-[280px]">
+                      {output.file || output.filename || "—"}
+                    </span>
+                  </div>
                   <span className="font-mono text-[12px] text-muted/30">
                     {output.lines ? `${output.lines}L` : output.size ? `${Math.round(output.size / 1024)}K` : "—"}
                   </span>
