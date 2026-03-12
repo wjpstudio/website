@@ -16,10 +16,12 @@ async function fetchFile(path: string) {
 }
 
 export async function GET() {
-  const [data, usage, kodo, needs, products, studio, wjp] = await Promise.allSettled([
+  const [data, usage, kodo, kikai, yama, needs, products, studio, wjp] = await Promise.allSettled([
     fetchFile("data.json"),
     fetchFile("data/usage.json"),
     fetchFile("data/kodo.json"),
+    fetchFile("data/kikai.json"),
+    fetchFile("data/yama.json"),
     fetchFile("needs-wjp.json"),
     fetchFile("data/products.json"),
     fetchFile("data/brain-dumps-studio.json"),
@@ -33,6 +35,8 @@ export async function GET() {
     data: val(data),
     usage: val(usage),
     kodo: val(kodo),
+    kikai: val(kikai),
+    yama: val(yama),
     needs: val(needs),
     products: val(products),
     brainDumpsStudio: val(studio),

@@ -145,6 +145,25 @@ export default function DashboardPage() {
 
       if (dashData.kodo) setKodoData(dashData.kodo);
 
+      // Merge per-agent JSON into agents state for richer card data
+      setAgents((prev) => {
+        const merged = { ...prev };
+        for (const [key, agentJson] of [
+          ["kodo", dashData.kodo],
+          ["kikai", dashData.kikai],
+          ["yama", dashData.yama],
+        ] as const) {
+          if (!agentJson) continue;
+          const existing = merged[key] || {};
+          merged[key] = {
+            ...existing,
+            workingOn: agentJson.activeTask?.name || existing.workingOn,
+            status: agentJson.status || existing.status,
+          };
+        }
+        return merged;
+      });
+
       if (dashData.needs) setNeedsWjp(dashData.needs.items || []);
 
       const p = dashData.products;
