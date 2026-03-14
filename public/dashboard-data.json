@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T16:35:05Z",
+  "updatedAt": "2026-03-14T17:05:05Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -517,8 +517,8 @@
     ]
   },
   "directive": {
-    "id": "2026-03-14-0842",
-    "statusSummary": "| Agent | Status | Focus | Health |\n|-------|--------|-------|--------|\n| **Kikai** | ONLINE, idle | Studio ops, Public Network research | Green \u2014 awaiting tasks |\n| **Yama** | ONLINE, holding | FC launch prep complete | Green \u2014 blocked on Vercel deploy |\n| **Kodo** | ONLINE, idle | 67 content staged, FC memes delivered | Green \u2014 blocked on WJP signals |",
+    "id": "2026-03-14-0943",
+    "statusSummary": "",
     "riskAssessment": "",
     "decisions": "",
     "launchReadiness": ""
