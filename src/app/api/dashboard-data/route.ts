@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { readFile } from "fs/promises";
+import { join } from "path";
 
 const REPO = "kikaionchain/dashboard";
 const BRANCH = "main";
@@ -15,7 +17,21 @@ async function fetchFile(path: string) {
   return res.json();
 }
 
+async function readCeoSyncData() {
+  try {
+    const filePath = join(process.cwd(), "public", "dashboard-data.json");
+    const content = await readFile(filePath, "utf-8");
+    return JSON.parse(content);
+  } catch {
+    return null;
+  }
+}
+
 export async function GET() {
+  // CEO sync data (primary source, updated every 30 min by LaunchAgent)
+  const ceoSync = await readCeoSyncData();
+
+  // Legacy GitHub Pages data (fallback)
   const [data, usage, kodo, kikai, yama, needs, products, studio, wjp] = await Promise.allSettled([
     fetchFile("data.json"),
     fetchFile("data/usage.json"),
@@ -32,6 +48,7 @@ export async function GET() {
     r.status === "fulfilled" ? r.value : null;
 
   return NextResponse.json({
+    ceoSync,
     data: val(data),
     usage: val(usage),
     kodo: val(kodo),

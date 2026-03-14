@@ -116,6 +116,8 @@ export default function DashboardPage() {
   }>({ active: [], queued: [] });
   const [lastUpdate, setLastUpdate] = useState("");
   const [expandedDump, setExpandedDump] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [ceoSync, setCeoSync] = useState<any>(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -183,6 +185,7 @@ export default function DashboardPage() {
       setAllCronJobs(allCronJobs);
       setAllOutputs(allOutputs);
 
+      if (dashData.ceoSync) setCeoSync(dashData.ceoSync);
       if (dashData.needs) setNeedsWjp(dashData.needs.items || []);
 
       const p = dashData.products;
@@ -343,6 +346,80 @@ export default function DashboardPage() {
       </header>
 
       <div className="mx-auto max-w-6xl px-6 py-8">
+        {/* ── CEO Sync: Blocked on WJP ──────────── */}
+        {ceoSync?.blocked && ceoSync.blocked.length > 0 && (
+          <section className="mb-8">
+            <h2 className="font-mono text-[12px] tracking-[0.25em] text-red-400 uppercase mb-4">
+              Your Move ({ceoSync.blocked.length})
+            </h2>
+            <div className="grid gap-[1px] bg-border">
+              {ceoSync.blocked.map((item: { title: string; what: string; action: string; whoBlocked: string; priority?: string }, i: number) => (
+                <div key={i} className="bg-surface p-4">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-mono text-sm text-foreground font-medium">{item.title}</span>
+                    {item.priority && <span className="font-mono text-[10px] text-red-400 border border-red-400/30 px-1.5 py-0.5 uppercase">{item.priority}</span>}
+                  </div>
+                  <p className="font-mono text-[12px] text-muted mb-1">{item.what}</p>
+                  <p className="font-mono text-[12px] text-accent">Action: {item.action}</p>
+                  {item.whoBlocked && <p className="font-mono text-[11px] text-muted/50 mt-1">Blocks: {item.whoBlocked}</p>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── CEO Sync: Directive ────────────────── */}
+        {ceoSync?.directive && (
+          <section className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase">
+                CEO Directive
+              </h2>
+              <span className="font-mono text-[11px] text-muted/30">{ceoSync.directive.date}</span>
+            </div>
+            <div className="bg-surface border border-border p-4">
+              {ceoSync.directive.readiness && (
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="font-mono text-2xl text-foreground font-bold">{ceoSync.directive.readiness}%</span>
+                  <span className="font-mono text-[12px] text-muted">Launch Ready</span>
+                </div>
+              )}
+              <p className="font-mono text-[12px] text-muted leading-relaxed">{ceoSync.directive.summary}</p>
+            </div>
+          </section>
+        )}
+
+        {/* ── CEO Sync: Task Board ───────────────── */}
+        {ceoSync?.tasks && (
+          <section className="mb-8">
+            <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
+              Task Board
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-border">
+              {[
+                { label: "In Progress", items: ceoSync.tasks.inProgress || [], color: "text-blue-400" },
+                { label: "Queued", items: ceoSync.tasks.backlog || [], color: "text-muted" },
+                { label: "Done", items: (ceoSync.tasks.completed || []).slice(0, 8), color: "text-green-400/50" },
+              ].map(({ label, items, color }) => (
+                <div key={label} className="bg-surface p-4">
+                  <h3 className={`font-mono text-[11px] uppercase tracking-wider ${color} mb-3`}>
+                    {label} ({items.length})
+                  </h3>
+                  <div className="space-y-2">
+                    {items.length === 0 && <p className="font-mono text-[11px] text-muted/30">None</p>}
+                    {items.map((task: { title: string; owner?: string; priority?: string }, j: number) => (
+                      <div key={j} className="flex items-start justify-between gap-2">
+                        <span className="font-mono text-[11px] text-muted leading-tight">{task.title}</span>
+                        {task.priority && <span className="font-mono text-[9px] text-accent/60 shrink-0">{task.priority}</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* ── Agents ──────────────────────────────── */}
         <section className="mb-8">
           <h2 className="font-mono text-[12px] tracking-[0.25em] text-accent uppercase mb-4">
