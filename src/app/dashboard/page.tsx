@@ -215,7 +215,8 @@ export default function DashboardPage() {
         {/* YOUR MOVE */}
         <div className="dash-module dash-yourmove dash-fade">
           <div className="dash-module-header">
-            <h2 className="dash-module-title">
+            <h2 className="dash-module-title" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <img src="/pfp/wjp.png" alt="WJP" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover" }} />
               <span className="dash-yourmove-accent">YOUR MOVE</span>
             </h2>
             {blocked.length > 0 && (
