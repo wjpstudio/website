@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T21:05:05Z",
+  "updatedAt": "2026-03-14T21:35:04Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -43,27 +43,12 @@
     {
       "priority": "blocking",
       "title": "Publish @forcrypto/sdk and @forcrypto/cli to npm (P0 LAUNCH BLOCKER)",
-      "ask": "Run these 3 commands in Terminal:"
-    },
-    {
-      "priority": "blocking",
-      "title": "Revoke Netlify Token",
-      "ask": "Revoke in Netlify dashboard"
-    },
-    {
-      "priority": "enabling",
-      "title": "FC Tier Pricing Decisions",
-      "ask": "Pick final names and prices for each tier"
+      "ask": "Generate a granular access token on npmjs.com OR enable 2FA on the wjponchain npm account"
     },
     {
       "priority": "enabling",
       "title": "SIGNAL Pricing",
       "ask": "Pick $9 or $14"
-    },
-    {
-      "priority": "blocking",
-      "title": "Verify Bitwarden Agent Emails",
-      "ask": "Check Bitwarden admin panel"
     }
   ],
   "taskQueue": {
@@ -527,32 +512,14 @@
     {
       "priority": "blocking",
       "title": "Publish @forcrypto/sdk and @forcrypto/cli to npm (P0 LAUNCH BLOCKER)",
-      "ask": "Run these 3 commands in Terminal:",
+      "ask": "Generate a granular access token on npmjs.com OR enable 2FA on the wjponchain npm account",
       "who": "Launch (Monday March 16)"
-    },
-    {
-      "priority": "blocking",
-      "title": "Revoke Netlify Token",
-      "ask": "Revoke in Netlify dashboard",
-      "who": "Dashboard deploy security"
-    },
-    {
-      "priority": "enabling",
-      "title": "FC Tier Pricing Decisions",
-      "ask": "Pick final names and prices for each tier",
-      "who": "Yama (For Crypto)"
     },
     {
       "priority": "enabling",
       "title": "SIGNAL Pricing",
       "ask": "Pick $9 or $14",
       "who": "Yama (For Crypto)"
-    },
-    {
-      "priority": "blocking",
-      "title": "Verify Bitwarden Agent Emails",
-      "ask": "Check Bitwarden admin panel",
-      "who": "Agent security audit"
     }
   ]
 }
