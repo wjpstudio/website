@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T05:29:46Z",
+  "updatedAt": "2026-03-14T05:34:08Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -136,10 +136,10 @@
         "detail": "deploy.sh in dashboard repo contains a plaintext Netlify auth token. Token may be in git history."
       },
       {
-        "task": "Fix categories API 401 error",
+        "task": "Fix categories API 401 error (DONE)",
         "owner": "Claude",
         "priority": "P1",
-        "detail": "Agent categories API returns 401 Unauthorized. Needs to be public for SDK/CLI users to browse categories."
+        "detail": "Made `/api/agent/categories` public with IP-based rate limiting. Removed auth requirement. SDK/CLI users can now browse categories without an API key."
       },
       {
         "task": "Commit 19 unstaged changes in FC repo",
@@ -347,10 +347,10 @@
         "detail": "deploy.sh in dashboard repo contains a plaintext Netlify auth token. Token may be in git history."
       },
       {
-        "task": "Fix categories API 401 error",
+        "task": "Fix categories API 401 error (DONE)",
         "owner": "Claude",
         "priority": "P1",
-        "detail": "Agent categories API returns 401 Unauthorized. Needs to be public for SDK/CLI users to browse categories."
+        "detail": "Made `/api/agent/categories` public with IP-based rate limiting. Removed auth requirement. SDK/CLI users can now browse categories without an API key."
       },
       {
         "task": "Commit 19 unstaged changes in FC repo",
@@ -489,9 +489,9 @@
     ]
   },
   "directive": {
-    "id": "2026-03-13-2228",
+    "id": "2026-03-14-0535",
     "statusSummary": "",
-    "riskAssessment": "",
+    "riskAssessment": "- **HIGH**: SDK/CLI not on npm. Every CTA on homepage points to packages that don't exist. This is the #1 launch risk.\n- **MEDIUM**: Marketplace will be empty on launch. 10 products need uploading Monday 8:30 AM ET.\n- **LOW**: dashboard.wjp.studio domain still using alias workaround (works fine, Vercel cache issue)",
     "decisions": "",
     "launchReadiness": ""
   },
