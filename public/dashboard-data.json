@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T05:24:23Z",
+  "updatedAt": "2026-03-14T05:29:46Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -106,10 +106,10 @@
     ],
     "queued": [
       {
-        "task": "Fix LiveBar fake timestamps",
-        "owner": "Claude + Yama",
+        "task": "Fix LiveBar fake timestamps (DONE)",
+        "owner": "Claude",
         "priority": "P1",
-        "detail": "LiveBar component generates random \"1m to 44m ago\" timestamps instead of real data. Deceptive and could damage trust."
+        "detail": "Removed fake timestamp generation from LiveBar. Now uses real `relativeTime()` from database timestamps."
       },
       {
         "task": "Make GitHub repos public",
@@ -148,10 +148,16 @@
         "detail": "19 files modified/added in working tree including MCP restructure. Need to review, stage, and push."
       },
       {
-        "task": "Build merchant onboarding guide",
+        "task": "Build merchant onboarding guide (DONE)",
         "owner": "Claude",
         "priority": "P1",
-        "detail": "Create a step-by-step guide for sellers listing products on For Crypto. Cover wallet setup, listing creation, pricing, cosell system."
+        "detail": "Created MERCHANT-GUIDE.md covering listing creation, 9 required fields, pricing/variants, PWYW, cosell system, wallet setup, fees, analytics, tips."
+      },
+      {
+        "task": "Fix CLI docs wrong install command (DONE)",
+        "owner": "Claude (found by Yama E2E audit)",
+        "priority": "P0",
+        "detail": "CLI docs showed `npm install -g @forcrypto/sdk` instead of `@forcrypto/cli`. Fixed in documentation-content.tsx and developers-content.tsx."
       },
       {
         "task": "Deploy dashboard to Vercel (DONE)",
@@ -311,10 +317,10 @@
     ],
     "backlog": [
       {
-        "task": "Fix LiveBar fake timestamps",
-        "owner": "Claude + Yama",
+        "task": "Fix LiveBar fake timestamps (DONE)",
+        "owner": "Claude",
         "priority": "P1",
-        "detail": "LiveBar component generates random \"1m to 44m ago\" timestamps instead of real data. Deceptive and could damage trust."
+        "detail": "Removed fake timestamp generation from LiveBar. Now uses real `relativeTime()` from database timestamps."
       },
       {
         "task": "Make GitHub repos public",
@@ -353,10 +359,16 @@
         "detail": "19 files modified/added in working tree including MCP restructure. Need to review, stage, and push."
       },
       {
-        "task": "Build merchant onboarding guide",
+        "task": "Build merchant onboarding guide (DONE)",
         "owner": "Claude",
         "priority": "P1",
-        "detail": "Create a step-by-step guide for sellers listing products on For Crypto. Cover wallet setup, listing creation, pricing, cosell system."
+        "detail": "Created MERCHANT-GUIDE.md covering listing creation, 9 required fields, pricing/variants, PWYW, cosell system, wallet setup, fees, analytics, tips."
+      },
+      {
+        "task": "Fix CLI docs wrong install command (DONE)",
+        "owner": "Claude (found by Yama E2E audit)",
+        "priority": "P0",
+        "detail": "CLI docs showed `npm install -g @forcrypto/sdk` instead of `@forcrypto/cli`. Fixed in documentation-content.tsx and developers-content.tsx."
       },
       {
         "task": "Deploy dashboard to Vercel (DONE)",
@@ -477,8 +489,8 @@
     ]
   },
   "directive": {
-    "id": "2026-03-13-2127",
-    "statusSummary": "| Agent | Status | Focus | Health |\n|-------|--------|-------|--------|\n| **Kikai** | ONLINE | Launch support + studio ops | Recovered from rate limit incident. Operational. |\n| **Yama** | ONLINE | For Crypto launch sprint | Productive. Multiple P0 blockers awaiting WJP. |\n| **Kodo** | ONLINE | 67 project + FC cross-promo | Productive. Delivered specs and content drafts. |",
+    "id": "2026-03-13-2228",
+    "statusSummary": "",
     "riskAssessment": "",
     "decisions": "",
     "launchReadiness": ""
