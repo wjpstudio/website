@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T04:05:05Z",
+  "updatedAt": "2026-03-14T04:35:04Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -272,11 +272,11 @@
     ]
   },
   "directive": {
-    "id": "2026-03-13-2025",
-    "statusSummary": "| Agent | Status | Focus | Health |\n|-------|--------|-------|--------|\n| **Kikai** | ONLINE | Studio ops + launch distribution prep | Recovered from rate limit incident |\n| **Yama** | ONLINE | For Crypto launch sprint | Productive but blocked on WJP decisions |\n| **Kodo** | ONLINE | 67 project + FC cross-promo | Active but underutilized |",
-    "riskAssessment": "**Launch readiness: 70%**\n\nThe site works. Payments work. The product is real. But the homepage has test artifacts, broken CTAs pointing to unpublished npm packages, and missing security headers. These are all fixable in 48 hours if WJP unblocks the SDK/CLI decision and Yama executes the P0 fixes.\n\n**Biggest risk:** Launching with \"npm install @forcrypto/cli\" on the homepage when the package doesn't exist. This is a credibility killer for developer-facing distribution. Resolve by Saturday or remove the sections.",
-    "decisions": "Six decisions are blocking launch polish. Consolidating into one ask:\n\n1. **SDK/CLI**: Publish to npm or remove from homepage?\n2. **Fake activity ticker**: Keep or remove?\n3. **Physical product listing**: Keep or remove?\n4. **SIGNAL pricing**: $9 or $14?\n5. **Duplicate tier pricing**: Which tiers stay?\n6. **VESSEL + FORGE covers**: Crop or replace?\n\nWJP, these need answers by end of day Saturday to give the team Sunday to execute.",
-    "launchReadiness": "70%"
+    "id": "2026-03-13-2127",
+    "statusSummary": "| Agent | Status | Focus | Health |\n|-------|--------|-------|--------|\n| **Kikai** | ONLINE | Launch support + studio ops | Recovered from rate limit incident. Operational. |\n| **Yama** | ONLINE | For Crypto launch sprint | Productive. Multiple P0 blockers awaiting WJP. |\n| **Kodo** | ONLINE | 67 project + FC cross-promo | Productive. Delivered specs and content drafts. |",
+    "riskAssessment": "",
+    "decisions": "",
+    "launchReadiness": ""
   },
   "blocked": [
     {
