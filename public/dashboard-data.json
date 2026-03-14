@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T06:05:04Z",
+  "updatedAt": "2026-03-14T06:11:51Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -22,7 +22,7 @@
     },
     "yama": {
       "status": "active",
-      "workingOn": "no data",
+      "workingOn": "Overnight \u2014 CEO directive active",
       "contextPct": null,
       "model": "claude-opus-4-6",
       "sessionDurationMin": null,
@@ -69,38 +69,52 @@
   "taskQueue": {
     "active": [
       {
-        "task": "FC launch distribution prep",
-        "owner": "Kikai + Yama",
+        "task": "FC launch sprint - final 47 hours",
+        "owner": "Claude (CEO) + Yama",
         "priority": "P0",
-        "detail": "Product Hunt copy, Reddit posts, directory submissions, coseller outreach kit, teaser copy ready. Content strategies deployed to agents. Final scheduling needed.",
-        "status": ""
+        "detail": "FC build verified green. 24 local changes await WJP commit+push. Yama E2E audit complete (13 pages). All launch materials ready. Preflight checklist written.",
+        "status": "Code ready. Blocked on WJP: commit, npm publish, revoke token."
       },
       {
-        "task": "FC launch sprint - final fixes",
+        "task": "FC launch distribution prep",
+        "owner": "Yama + Kikai",
+        "priority": "P0",
+        "detail": "X thread (5 posts), Discord announcement (3 versions), Reddit posts (4 subreddits), Product Hunt copy, coseller DM template all finalized. Scheduling needed.",
+        "status": "Materials complete. SDK/CLI posts held until packages published."
+      },
+      {
+        "task": "Seed product upload prep",
         "owner": "Yama",
         "priority": "P0",
-        "detail": "Yama running final E2E tests, fixing response headers, SDK/CLI status check, homepage CTA audit.",
-        "status": ""
+        "detail": "10 product listings ready for Monday 8:30 AM upload. Copy complete. Prices need WJP confirmation on PULSE, LEDGER, FLOW, FORGE.",
+        "status": "Copy ready. Cover images and final pricing pending."
       },
       {
-        "task": "CEO Autonomy System refinement",
+        "task": "CEO Autonomy System",
         "owner": "Claude (CEO)",
         "priority": "P0",
-        "detail": "Hourly sync running via launchd. Dashboard deployed to dashboard.wjp.studio with new gray+blue full-viewport design. 7 modules live. Dashboard data auto-syncs every 30min.",
-        "status": "Dashboard live. Content approval system placeholder ready. Office tab pending."
+        "detail": "Dashboard at dashboard.wjp.studio. Auto-sync every 30min via LaunchAgent. CEO sync every 3h. Morning briefs generated.",
+        "status": "Running. Dashboard data pipeline improved."
       },
       {
-        "task": "67 Meme content for FC launch cross-promotion",
+        "task": "67 Market spec + activation",
         "owner": "Kodo",
         "priority": "P1",
-        "detail": "Kodo created 3 meme content pieces. Need final review before posting. Pieces: \"The Receipt\" (Fri), \"The 67 Way\" (Sat), \"The Drop\" (Sun pre-launch tease).",
-        "status": "3 pieces drafted, pending WJP review"
+        "detail": "67 Market embed spec delivered. Implementation plan drafted. 67coinX activation plan ready. 3 FC launch memes scheduled.",
+        "status": "Specs delivered. Awaiting FC launch before build."
+      },
+      {
+        "task": "Public Network Phase 1 research",
+        "owner": "Kikai",
+        "priority": "P1",
+        "detail": "DID standards, Ceramic, Lens, Farcaster architecture research. Draft initial architecture proposal.",
+        "status": "Starting."
       },
       {
         "task": "Agent intelligence gathering",
         "owner": "Kikai + Yama + Kodo",
         "priority": "P1",
-        "detail": "All agents have monitoring targets. Checking daily X accounts, news, competitors. Logging to memory.",
+        "detail": "All agents monitoring 20+ X accounts, crypto news, competitors. Logging to memory. CT scans every 2 hours.",
         "status": ""
       }
     ],
@@ -280,38 +294,52 @@
   "tasks": {
     "inProgress": [
       {
-        "task": "FC launch distribution prep",
-        "owner": "Kikai + Yama",
+        "task": "FC launch sprint - final 47 hours",
+        "owner": "Claude (CEO) + Yama",
         "priority": "P0",
-        "detail": "Product Hunt copy, Reddit posts, directory submissions, coseller outreach kit, teaser copy ready. Content strategies deployed to agents. Final scheduling needed.",
-        "status": ""
+        "detail": "FC build verified green. 24 local changes await WJP commit+push. Yama E2E audit complete (13 pages). All launch materials ready. Preflight checklist written.",
+        "status": "Code ready. Blocked on WJP: commit, npm publish, revoke token."
       },
       {
-        "task": "FC launch sprint - final fixes",
+        "task": "FC launch distribution prep",
+        "owner": "Yama + Kikai",
+        "priority": "P0",
+        "detail": "X thread (5 posts), Discord announcement (3 versions), Reddit posts (4 subreddits), Product Hunt copy, coseller DM template all finalized. Scheduling needed.",
+        "status": "Materials complete. SDK/CLI posts held until packages published."
+      },
+      {
+        "task": "Seed product upload prep",
         "owner": "Yama",
         "priority": "P0",
-        "detail": "Yama running final E2E tests, fixing response headers, SDK/CLI status check, homepage CTA audit.",
-        "status": ""
+        "detail": "10 product listings ready for Monday 8:30 AM upload. Copy complete. Prices need WJP confirmation on PULSE, LEDGER, FLOW, FORGE.",
+        "status": "Copy ready. Cover images and final pricing pending."
       },
       {
-        "task": "CEO Autonomy System refinement",
+        "task": "CEO Autonomy System",
         "owner": "Claude (CEO)",
         "priority": "P0",
-        "detail": "Hourly sync running via launchd. Dashboard deployed to dashboard.wjp.studio with new gray+blue full-viewport design. 7 modules live. Dashboard data auto-syncs every 30min.",
-        "status": "Dashboard live. Content approval system placeholder ready. Office tab pending."
+        "detail": "Dashboard at dashboard.wjp.studio. Auto-sync every 30min via LaunchAgent. CEO sync every 3h. Morning briefs generated.",
+        "status": "Running. Dashboard data pipeline improved."
       },
       {
-        "task": "67 Meme content for FC launch cross-promotion",
+        "task": "67 Market spec + activation",
         "owner": "Kodo",
         "priority": "P1",
-        "detail": "Kodo created 3 meme content pieces. Need final review before posting. Pieces: \"The Receipt\" (Fri), \"The 67 Way\" (Sat), \"The Drop\" (Sun pre-launch tease).",
-        "status": "3 pieces drafted, pending WJP review"
+        "detail": "67 Market embed spec delivered. Implementation plan drafted. 67coinX activation plan ready. 3 FC launch memes scheduled.",
+        "status": "Specs delivered. Awaiting FC launch before build."
+      },
+      {
+        "task": "Public Network Phase 1 research",
+        "owner": "Kikai",
+        "priority": "P1",
+        "detail": "DID standards, Ceramic, Lens, Farcaster architecture research. Draft initial architecture proposal.",
+        "status": "Starting."
       },
       {
         "task": "Agent intelligence gathering",
         "owner": "Kikai + Yama + Kodo",
         "priority": "P1",
-        "detail": "All agents have monitoring targets. Checking daily X accounts, news, competitors. Logging to memory.",
+        "detail": "All agents monitoring 20+ X accounts, crypto news, competitors. Logging to memory. CT scans every 2 hours.",
         "status": ""
       }
     ],
@@ -489,11 +517,11 @@
     ]
   },
   "directive": {
-    "id": "2026-03-14-0620",
-    "statusSummary": "",
-    "riskAssessment": "- **HIGH**: SDK/CLI not on npm. #1 launch risk.\n- **HIGH**: 22 unstaged changes. Overnight fixes not deployed.\n- **MEDIUM**: QA test product still live on /search. Need to remove before Monday.\n- **MEDIUM**: Marketplace empty until Monday upload.\n- **LOW**: dashboard.wjp.studio alias workaround (functional).\n\n### What I'm Working On Now\n- FC homepage CTA audit (sub-agent running)\n- Test listing cleanup research (sub-agent running)\n- Preflight checklist created + pushed to Yama\n- Dashboard data rebuilt and deployed\n- Agent directives refreshed via SSH\n\n### Saturday Plan\n- Morning: Continue FC f",
-    "decisions": "",
-    "launchReadiness": ""
+    "id": "2026-03-14-0730",
+    "statusSummary": "T-47 hours to launch. All agents active. Yama delivered E2E audit (13 pages) + QA report + launch day minute-by-minute plan. Kodo delivered 67 Market spec, 30K word research, 3 memes. All overnight code fixes verified in local build. 24 files await WJP commit. Morning brief ready at ~/command-center/ceo-sync/reports/2026-03-14-morning-brief.md.",
+    "riskAssessment": "- **HIGH**: SDK/CLI not on npm. Every developer CTA points to nonexistent packages. #1 launch risk. BLOCKED ON WJP.\n- **HIGH**: 24 unstaged FC changes need commit+push. Overnight fixes (LiveBar, CLI docs, APIs, embed themes) don't deploy until committed.\n- **MEDIUM**: QA test product still live on /search. Admin dashboard toggle at /_admin/dashboard.\n- **MEDIUM**: Marketplace empty until Monday 8:30 AM upload. 10 product listings with copy ready.\n- **LOW**: dashboard.wjp.studio alias workaround (functional).\n\n### WJP Decision Package\n\n1. **P0**: Run `cd ~/forcryptomarket/app && git diff --stat",
+    "decisions": "1. **P0**: Run `cd ~/forcryptomarket/app && git diff --stat` to review, then commit + push 24 files\n2. **P0**: Publish SDK + CLI to npm (`npm login --scope=@forcrypto` then build + publish from sdk/ and cli/)\n3. **P1**: Revoke Netlify token in Netlify dashboard\n4. **P1**: Confirm product pricing (PULSE, LEDGER, FLOW, FORGE - current proposals in Yama's product listing copy)\n\n**Launch readiness: 92%**",
+    "launchReadiness": "92%"
   },
   "blocked": [
     {
