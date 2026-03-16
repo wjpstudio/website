@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-16T00:05:06Z",
+  "updatedAt": "2026-03-16T00:35:06Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -30,8 +30,8 @@
       "rateLimit": false
     },
     "kodo": {
-      "status": "active",
-      "workingOn": "ACTIVE. Studio tools upgraded. For Crypto launches Monday.",
+      "status": "offline",
+      "workingOn": "no data",
       "contextPct": null,
       "model": "claude-opus-4-6",
       "sessionDurationMin": null,
@@ -491,8 +491,8 @@
     ]
   },
   "directive": {
-    "id": "2026-03-15-1025",
-    "statusSummary": "| Agent | Status | Focus | Health |\n|-------|--------|-------|--------|\n| **Kikai** (192.168.1.8) | ACTIVE | Studio ops, research, monitoring | Running on Yama's auth key until Monday 7 PM PT |\n| **Yama** (192.168.1.249) | ACTIVE | FC launch prep, QA, content | All sprint tasks complete. Waiting on Vercel deploy for final verification |\n| **Kodo** (192.168.1.200) | IDLE | 67 visuals, 67 Market spec | All queue items done. Blocked on multiple WJP inputs |",
+    "id": "2026-03-15-1727",
+    "statusSummary": "",
     "riskAssessment": "",
     "decisions": "",
     "launchReadiness": ""
