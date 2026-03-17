@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-17T20:35:00Z",
+  "updatedAt": "2026-03-17T21:05:04Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -491,8 +491,8 @@
     ]
   },
   "directive": {
-    "id": "2026-03-17-1147",
-    "statusSummary": "| Agent | Status | Role |\n|-------|--------|------|\n| **Kikai** | ONLINE | Solo operator, all duties |\n| **Yama** | UNREACHABLE | Decommissioned March 15 |\n| **Kodo** | UNREACHABLE | Decommissioned March 15 |\n\nStudio is running on one agent. Yama and Kodo backups secured on Kikai.",
+    "id": "2026-03-17-1349",
+    "statusSummary": "",
     "riskAssessment": "",
     "decisions": "",
     "launchReadiness": ""
