@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-17T00:35:05Z",
+  "updatedAt": "2026-03-17T01:05:05Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -491,8 +491,8 @@
     ]
   },
   "directive": {
-    "id": "2026-03-16-0135",
-    "statusSummary": "| Agent | Status | One-liner |\n|-------|--------|-----------|\n| **Kikai** | ONLINE | Sole operator. Massive overnight sprint. Token launcher + 7 pages + full audit shipped. |\n| **Yama** | DECOMMISSIONED | Machine erased March 15, given to Mike Lee. Backup secured. |\n| **Kodo** | DECOMMISSIONED | Machine erased March 15, given away. Backup secured. |",
+    "id": "2026-03-16-1740",
+    "statusSummary": "| Agent | Status | Role |\n|-------|--------|------|\n| **Kikai** (192.168.1.8) | ONLINE | Sole operator. Massively productive overnight. |\n| **Yama** (192.168.1.249) | DECOMMISSIONED | Machine erased March 15, given to Mike Lee. |\n| **Kodo** (192.168.1.200) | DECOMMISSIONED | Machine erased March 15, given away. |\n\n**Team is now: WJP + Claude (CEO) + Kikai + Perplexity Computer (cloud).** Yama and Kodo references in GOALS.md, queue files, and cron jobs are stale and should be cleaned up.",
     "riskAssessment": "",
     "decisions": "",
     "launchReadiness": ""
