@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
-const DATA_DIR = join(process.cwd(), ".data");
+const DATA_DIR = process.env.VERCEL ? "/tmp/studio-data" : join(process.cwd(), ".data");
 const AGENTS_FILE = join(DATA_DIR, "agents.json");
 const ACTIVITY_FILE = join(DATA_DIR, "activity.json");
 const MAX_ACTIVITY = 200;
@@ -48,9 +48,12 @@ async function writeJson(path: string, data: unknown) {
 function verifySecret(request: NextRequest): boolean {
   const auth = request.headers.get("authorization");
   if (!auth) return false;
-  const token = auth.replace("Bearer ", "");
-  const secret = process.env.STUDIO_SYNC_SECRET;
-  if (!secret) return false;
+  const token = auth.replace("Bearer ", "").trim();
+  const secret = process.env.STUDIO_SYNC_SECRET?.trim();
+  if (!secret) {
+    console.error("STUDIO_SYNC_SECRET not set in environment");
+    return false;
+  }
   return token === secret;
 }
 
