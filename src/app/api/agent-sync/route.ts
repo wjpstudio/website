@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ ok: true, syncedAt: new Date().toISOString() });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Sync failed" }, { status: 500 });
   }
 }
