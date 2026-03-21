@@ -126,7 +126,7 @@ export async function GET(request: NextRequest) {
   const secret = process.env.STUDIO_SYNC_SECRET;
 
   const isCookieAuth = auth?.value === "1";
-  const isBearerAuth = secret && bearerAuth === `Bearer ${secret}`;
+  const isBearerAuth = secret && bearerAuth?.replace("Bearer ", "").trim() === secret.trim();
 
   if (!isCookieAuth && !isBearerAuth) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
