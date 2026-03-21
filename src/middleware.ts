@@ -28,6 +28,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/dashboard-data") ||
     pathname.startsWith("/api/dashboard-auth") ||
+    pathname.startsWith("/api/agent-sync") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/pfp") ||
     pathname === "/favicon.ico"
