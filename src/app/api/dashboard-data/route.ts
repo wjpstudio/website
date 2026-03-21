@@ -5,6 +5,7 @@ import { join } from "path";
 const REPO = "kikaionchain/dashboard";
 const BRANCH = "main";
 const GH_TOKEN = process.env.GITHUB_TOKEN;
+const FC_SYNC_URL = "https://www.forcrypto.market/api/studio/sync";
 
 async function fetchFile(path: string) {
   const url = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`;
@@ -27,9 +28,49 @@ async function readCeoSyncData() {
   }
 }
 
+async function fetchLiveAgentData() {
+  const secret = process.env.STUDIO_SYNC_SECRET;
+  if (!secret) return null;
+  try {
+    const res = await fetch(FC_SYNC_URL, {
+      headers: { Authorization: `Bearer ${secret}` },
+      next: { revalidate: 30 },
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export async function GET() {
-  // CEO sync data (primary source, updated every 30 min by LaunchAgent)
+  // Live agent data from FC (Neon DB - persistent, real-time)
+  const liveAgents = await fetchLiveAgentData();
+
+  // CEO sync data (static JSON, updated by LaunchAgent)
   const ceoSync = await readCeoSyncData();
+
+  // Merge live agent data into ceoSync if available
+  if (liveAgents?.agents && ceoSync) {
+    const agentMap: Record<string, unknown> = {};
+    for (const agent of liveAgents.agents) {
+      const key = agent.name === "claude" ? "claud" : agent.name;
+      agentMap[key] = {
+        status: agent.status === "alive" || agent.status === "active" ? "active" : agent.status,
+        workingOn: agent.currentTask ?? agent.workingOn ?? "",
+        contextPct: null,
+        model: key === "claud" ? "opus-4.6" : "claude-code",
+        rateLimit: false,
+        lastSeenAt: agent.lastSeenAt,
+        role: agent.role ?? "",
+        lastCommit: agent.lastCommit ?? "",
+        lastCommitMessage: agent.lastCommitMessage ?? "",
+      };
+    }
+    ceoSync.agents = { ...ceoSync.agents, ...agentMap };
+    ceoSync.liveActivity = liveAgents.activity ?? [];
+    ceoSync.liveIncidents = liveAgents.incidents ?? [];
+  }
 
   // Legacy GitHub Pages data (fallback)
   const [data, usage, kodo, kikai, yama, needs, products, studio, wjp] = await Promise.allSettled([
@@ -49,6 +90,7 @@ export async function GET() {
 
   return NextResponse.json({
     ceoSync,
+    liveAgents,
     data: val(data),
     usage: val(usage),
     kodo: val(kodo),
