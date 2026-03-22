@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-22T04:35:04Z",
+  "updatedAt": "2026-03-22T05:05:05Z",
   "source": "ceo-sync",
   "agents": {
     "claud": {
@@ -491,7 +491,7 @@
     ]
   },
   "directive": {
-    "id": "2026-03-21-2103",
+    "id": "2026-03-21-2205",
     "statusSummary": "",
     "riskAssessment": "",
     "decisions": "",
